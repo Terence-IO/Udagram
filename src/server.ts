@@ -33,7 +33,7 @@ import {Router, Request, Response } from 'express';
     let image_url: string = req.query.image_url;
     
     if (!image_url){
-      return res.status(404).send("The URL provided cannot be converted. Please update it or use another.")
+      return res.status(404).send("The URL provided cannot be used. Please update it or use another.")
     }
     const filteredpath = await filterImageFromURL(image_url);
 
