@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
+import {Router, Request, Response } from 'express';
 
 (async () => {
 
@@ -28,9 +29,12 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   //   the filtered image file [!!TIP res.sendFile(filteredpath); might be useful]
 
   /**************************************************************************** */
-  app.get( "/filteredimage", async (req, res) => {
-    let image_url = req.query.image_url;
+  app.get( "/filteredimage", async (req: Request, res: Response) => {
+    let image_url: string = req.query.image_url;
     
+    if (!image_url){
+      return res.status(404).send("The URL provided cannot be used. Please update it or use another.")
+    }
     const filteredpath = await filterImageFromURL(image_url);
 
     return res.status(200).sendFile(filteredpath , async () => {
